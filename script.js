@@ -39,6 +39,21 @@ app.post('/login', (req,res)=> {
     const {email, password} = req.body;
 
     // Verify user credentials
-    connection.query
-})
+    connection.query('SELECT * FROM users WHERE email = ? AND password = ?', [email,password], (error, results, fields) => {
+        if (error) {
+            console.error(error);
+            res.status(500).json({error: 'An error occurred while logging in'});
+        } else if (results,length === 0) {
+            res.status(401).json({error: 'Invalid email or password'});
+        } else {
+            res.json({ message: 'Login successful'})
+        }
+        
+    });
+});
 
+
+// start server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});

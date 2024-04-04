@@ -13,10 +13,32 @@ const connection = mysql.createConnection({
     database: 'registration'
 });
 
-// connection.connect();
 
-connection.getConnection(function(err, connection) {
-    if (err) throw err;
-    console.log("Connected!");
-    connection.release();
+//,  connect to mysql
+connection.connect();
+
+//  middleware to parse JSON
+app.use(bodyParser.json());
+
+// Routes
+app.post('/signup', (req, res) => {
+    const {fname,lname, gender, email, password} = req.body;
+
+    // insert new user into database
+    connection.query('INSERT INTO users (fname, lname, gender, email, password) VALUES (?,?,?,?,?)', [ fname, lname, gender,email, password], (error, results, fields) => {
+    if (error) {
+        console.error(error);
+        res.status(500).json({error: 'An error occurred while signing up'});
+    }else{
+        res.json({ message: 'signup successful' });
+    }
+    });
+});
+
+app.post('/login', (req,res)=> {
+    const {email, password} = req.body;
+
+    // Verify user credentials
+    connection.query
 })
+

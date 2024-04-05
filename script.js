@@ -23,6 +23,7 @@ const pool = mysql.createPool({
 
 // Routes
 
+
 app.get('/signup', async (req, res) => {
   const { fname, lname, gender, email, password } = req.body;
 

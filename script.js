@@ -8,6 +8,9 @@ require('dotenv').config(); // Load environment variables
 const app = express();
 const port = 3000;
 
+// body parser middleware
+app.use(bodyParser.json());
+
 const pool = mysql.createPool({
   host: process.env.db_host,
   user: process.env.db_user,

@@ -6,11 +6,12 @@ const bcrypt = require('bcrypt'); // For password hashing
 require('dotenv').config(); // Load environment variables
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // body parser middleware
-app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 const pool = mysql.createPool({
   host: process.env.db_host,
